@@ -1,0 +1,15 @@
+#banner-bg{
+    float:left;
+    width:1400px;
+    height: 200px;
+    background-color: black;
+}
+
+#banner{
+    color:rgb(224, 222, 222);
+    font-size: 30px;
+    font-weight: bold;
+    padding: 70px;
+    /* position: absolute */
+    margin-top:auto;
+}

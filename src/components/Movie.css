@@ -1,0 +1,42 @@
+
+.posterBox{
+    width: 200px;
+    height: 400px;
+    background-color: rgb(68, 72, 161);
+    border-radius: 10px;
+    margin-top: 100px;
+
+}
+
+.posterBox img{
+    display: block;
+    width: 100%;
+    height: auto;
+    float: left;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
+}
+
+.info{
+    color: white;
+    font-size: 13px;
+    float: left;
+}
+
+.black-bg{
+    width: 200px;
+    height: 400px;
+    background-color: rgb(0, 0, 0, 0.8);
+    border-radius: 10px;
+    opacity: 0;
+    color: white;
+    font-size: 13px;
+    overflow: hidden;
+    margin-top: 100px;
+}
+
+.black-bg:hover{
+    opacity: 1;
+}
+
