@@ -3,15 +3,18 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
 import './App.css'
 import Nav from './components/Nav.jsx'
-import MainPage from './components/pages/MainPage.jsx'
-import PopularPage from './components/pages/PopularPage.jsx'
-import NowPlayingPage from './components/pages/NowPlayingPage.jsx'
-import TopRatedPage from './components/pages/TopRatedPage.jsx'
-import UpComing from './components/pages/UpComing.jsx'
+import MainPage from './pages/MainPage.jsx'
+import PopularPage from './pages/PopularPage.jsx'
+import NowPlayingPage from './pages/NowPlayingPage.jsx'
+import TopRatedPage from './pages/TopRatedPage.jsx'
+import UpComing from './pages/UpComing.jsx'
+import DetailPage from './pages/DetailPage.jsx'
+import Notfound from './pages/Notfound.jsx'
 
 
 function App() {
-  
+  // const {title} = useParams();
+
   return (
     <div className = 'container'>
       <Router>
@@ -23,6 +26,8 @@ function App() {
             <Route path="/nowplaying" element={<NowPlayingPage/>}/>
             <Route path="/toprated" element={<TopRatedPage/>}/>
             <Route path="/upcoming" element={<UpComing/>}/>
+            <Route path="/movie/:title" element={<DetailPage/>}/>
+            <Route path="/notfound" element={<Notfound/>}/>
           </Routes>
         </div>
         {/* <Footer/> */}

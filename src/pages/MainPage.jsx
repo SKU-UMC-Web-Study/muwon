@@ -1,7 +1,7 @@
 import React, {useState, useEffect}  from 'react';
 
 import './Page.css'
-import Banner from '../Banner.jsx'
+import Banner from '../components/Banner.jsx'
 
 const MainPage= () => {
     return(

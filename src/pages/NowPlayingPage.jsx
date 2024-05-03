@@ -1,10 +1,10 @@
 import React, {useState, useEffect}  from 'react';
 
-import Movie from '../Movie.jsx'
-import Overview from '../Overview.jsx'
+import Movie from '../components/Movie.jsx'
+import Overview from '../components/Overview.jsx'
 import './Page.css'
 
-const TopRatedPage= () => {
+const NowPlayingPage= () => {
     const [movies, setMovies] = useState([]);
 
     useEffect(()=>{
@@ -17,7 +17,7 @@ const TopRatedPage= () => {
                       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmE5ZDI5YzRhNWQ4OGJhY2QxODIxOWVhZmZlYzZlMCIsInN1YiI6IjY2MmU1NzMyMDNiZjg0MDEyNWVhZGE5MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.w00sWoRJw_0sqWhMuuINho69qGOHu_jkC9HbH2Rw2Hk'
                     }
                 }
-                const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
+                const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options);
                 const data = await response.json();
                 setMovies(data.results);
             }
@@ -48,4 +48,4 @@ const TopRatedPage= () => {
     )
 }
 
-export default TopRatedPage;
+export default NowPlayingPage;
