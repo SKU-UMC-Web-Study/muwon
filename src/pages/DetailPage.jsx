@@ -5,7 +5,7 @@ import Detail from '../components/Detail.jsx'
 
 const DetailPage = () =>{
     // console.log(title);
-    const { id } = useParams();
+    const { title } = useParams();
     const [detail, setDetails] = useState(null);
     const navigate = useNavigate();
 
@@ -17,10 +17,10 @@ const DetailPage = () =>{
                     method: 'GET',
                     headers: {
                       accept: 'application/json',
-                      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmE5ZDI5YzRhNWQ4OGJhY2QxODIxOWVhZmZlYzZlMCIsInN1YiI6IjY2MmU1NzMyMDNiZjg0MDEyNWVhZGE5MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.w00sWoRJw_0sqWhMuuINho69qGOHu_jkC9HbH2Rw2Hk'
+                      Authorization: 'Bearer'
                     }
                 }
-                const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US&page=1`, options)
+                const response = await fetch(`https://api.themoviedb.org/3/movie/${title}?language=en-US&page=1`, options)
                 if(response.ok){
                     const data = await response.json();
                     setDetails(data);

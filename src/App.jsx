@@ -46,7 +46,7 @@ function App() {
               <Route path="/nowplaying" element={<NowPlayingPage/>}/>
               <Route path="/toprated" element={<TopRatedPage/>}/>
               <Route path="/upcoming" element={<UpComing/>}/>
-              <Route path="/movie/:id" element={<DetailPage/>}/>
+              <Route path="/movie/:title" element={<DetailPage/>}/>
               <Route path="/notfound" element={<Notfound/>}/>
             </Routes>
         </Content>
