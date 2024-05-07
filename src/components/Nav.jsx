@@ -1,7 +1,40 @@
 import React, { useState, useLocation} from 'react';
 import { Link } from 'react-router-dom'
-import './Nav.css';
 // import Spinner from 'Spinner.jsx'
+import styled from 'styled-components';
+
+const Navbar = styled.div`
+    width: 100%;
+    height: 20px;
+    background-color:rgb(27, 23, 104);
+    padding: 20px;
+
+
+    position: fixed;
+    top: 0;
+    left:0;
+    right:0;
+    z-index: 999;
+`;
+
+const NavItem = styled(Link)`
+    color: white;
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+
+    &:first-child{
+        margin-right: 40%;
+    }
+
+    &:hover{
+        font-size: 18px;
+        cursor: pointer; 
+        color: yellow;
+    }
+}
+`;
 
 const Nav = () => {
     // const location = useLocation();
@@ -12,17 +45,17 @@ const Nav = () => {
     }
 
     return(
-        <div className='nav'>
-            <Link className='navItem' to="/">UMC Movie</Link>
-            <Link className='navItem' to="/" onClick = {loginClick}>
+        <Navbar>
+            <NavItem to="/">UMC Movie</NavItem>
+            <NavItem to="/" onClick = {loginClick}>
                 {isLoginned ? '로그아웃' : '로그인'}
-            </Link>
-            <Link className='navItem' to="/popular" >Popular</Link>
-            <Link className='navItem' to="/nowplaying" >Now Playing</Link>
-            <Link className='navItem' to="/toprated" >Top Rated</Link>
-            <Link className='navItem' to="/upcoming">Upcoming</Link>
+            </NavItem>
+            <NavItem to="/popular">Popular</NavItem>
+            <NavItem to="/nowplaying">Now Playing</NavItem>
+            <NavItem to="/toprated">Top Rated</NavItem>
+            <NavItem to="/upcoming">Upcoming</NavItem>
             {/* {loading && <Spinner/>} */}
-        </div>
+        </Navbar>
         
     )
 }

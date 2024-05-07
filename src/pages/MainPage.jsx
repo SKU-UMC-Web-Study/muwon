@@ -1,21 +1,34 @@
 import React, {useState, useEffect}  from 'react';
-
-import './Page.css'
 import Banner from '../components/Banner.jsx'
+import styled from 'styled-components';
+
+const FindMovie = styled.div`
+    margin-top: 200px;
+    position:fixed;
+    margin-left: 25%;
+`;
+
+const Search = styled.input`
+    width: 400px;
+    height: 30px;
+    border-radius: 20px;
+    border-color: white;
+    box-shadow: inset 0px 0px 0px 0px;
+    margin-right:10px;
+`;
 
 const MainPage= () => {
     return(
         <div>
             <Banner/>
-            <div id='findMovie'>
+            <FindMovie>
                 <p style={{color: 'white', fontWeight:'bold',fontSize:'20px'}}>Find your movies!</p>
                 <></>
                 <form>
-                    <input id='search' type='text' style={{marginRight:'10px'}}/>
+                    <Search type = 'text'></Search>
                     <button><img style={{width:'20px'}} src='src\img\lens.png'/></button>
                 </form>
-            </div>
-            
+            </FindMovie>
         </div>
         
     )
