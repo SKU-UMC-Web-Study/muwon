@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 import Nav from './components/Nav.jsx'
 import MainPage from './pages/MainPage.jsx'
+import SignupPage from './pages/SignupPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
 import PopularPage from './pages/PopularPage.jsx'
 import NowPlayingPage from './pages/NowPlayingPage.jsx'
 import TopRatedPage from './pages/TopRatedPage.jsx'
@@ -42,6 +44,8 @@ function App() {
         <Content>
           <Routes>
               <Route path="/" element={<MainPage/>}/>
+              <Route path="/signup" element={<SignupPage/>}/>
+              <Route path="/login" element={<LoginPage/>}/>
               <Route path="/popular" element={<PopularPage/>}/>
               <Route path="/nowplaying" element={<NowPlayingPage/>}/>
               <Route path="/toprated" element={<TopRatedPage/>}/>

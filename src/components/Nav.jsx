@@ -38,18 +38,10 @@ const NavItem = styled(Link)`
 
 const Nav = () => {
     // const location = useLocation();
-    const [isLoginned, setIsLoginned] = useState(false);
-
-    const loginClick = () =>{
-        setIsLoginned(!isLoginned);
-    }
-
-    return(
+ return(
         <Navbar>
             <NavItem to="/">UMC Movie</NavItem>
-            <NavItem to="/" onClick = {loginClick}>
-                {isLoginned ? '로그아웃' : '로그인'}
-            </NavItem>
+            <NavItem to="/signup">회원가입</NavItem>
             <NavItem to="/popular">Popular</NavItem>
             <NavItem to="/nowplaying">Now Playing</NavItem>
             <NavItem to="/toprated">Top Rated</NavItem>
