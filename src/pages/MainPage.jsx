@@ -1,19 +1,20 @@
-import React, {useState, useEffect}  from 'react';
-import ReactDOMServer from 'react-dom/server' //srcDoc 속성값으로 HTML 문자열을 받기위해 사용
+import React, { useState, useEffect }  from 'react';
+import { useParams, useNavigate } from 'react-router-dom'
 import Banner from '../components/Banner.jsx'
 import Movie from '../components/Movie.jsx'
-import styled from 'styled-components';
+import Overview from '../components/Overview.jsx'
+import Loading from './Loading.jsx';
+import styled, { css } from 'styled-components';
 import axios from 'axios';
 
 
 const FindMovie = styled.div`
-    margin-top: 200px;
-    position:fixed;
-    margin-left: 25%;
+    margin-left: auto;
+    margin-right: auto;
 `;
 
 const Search = styled.input`
-    width: 400px;
+    width: 500px;
     height: 30px;
     border-radius: 20px;
     border-color: white;
@@ -21,25 +22,101 @@ const Search = styled.input`
     margin-right:10px;
 `;
 
-const IframeContainer = styled.div`
-    margin-top: 20px;
-    width: 100%;
-    height: 200px;
 
-    iframe{
-        border: none;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        grid-gap: 10px;
+const ResultBox = styled.div`
+    width: 1000px;
+    height: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 30px;
+    padding-right:30px;
+    background-color: rgb(24,21,89);
+    overflow: auto;
+    display:grid;
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+    grid-gap: 10px;
+
+    &::-webkit-scrollbar{
+        width: 6px;
+        color: black;
+    }
+    &::-webkit-scrollbar-thumb{
+        border-radius: 2px;
+        background: yellow;
     }
 `;
 
+const Container = styled.div`
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 20px; 
+    position: relative;
+`;
+
+const OvvBox = styled.div`
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    // gap: 20px; 
+    position: absolute;
+    top:0;
+    left:20;
+`;
+
 const MainPage= () => {
+    //상태 관리: 검색어, 검색결과, 결과창활성화
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    // const { id } = useParams();
 
+    const handleSearch = (value) =>{
+        console.log(value);
+        setSearchTerm(value);
+    }
+
+    //DEBOUNCING
+//    const debouncedSearch = (func, delay, e) =>{
+//         let timer;
+
+//         return function(e){
+//             const context = this;
+//             // const event = args[0]; //args 배열의 첫번 째 요소인 이벤트 객체를 가져온다. 
+//             clearTimeout(timer);
+//             timer = setTimeout(()=>{
+//                 func.apply(context, e);
+//             }, delay);
+//         };
+//     }
+    //const optimizedSearch = debouncedSearch((e) => handleSearch(e), 200);
+
+    function debounce(func, delay){
+        let timer;
+
+        return function(...args){
+            clearTimeout(timer);
+            timer = setTimeout(()=>{
+                func.apply(this, args);
+            },delay);
+        }
+    }
+
+    function optimizedSearch(value, delay){
+        debounce(handleSearch, delay)(value);
+        
+    }
+
+    //API CALL with Controlling 'searchTerm'
     useEffect(()=>{
-        const searchMovies = async(e) =>{
-            if(searchTerm.trim()==='') return; //검색어가 비어있으면 함수 종료
+        const searchMovies = async() =>{
+            if(searchTerm.trim()==='') {
+                setSearchResults([]);
+                return; //검색어가 비어있으면 함수 종료
+            }
+
+            setIsLoading(true);
     
             try{
                 const options = {
@@ -57,9 +134,9 @@ const MainPage= () => {
                 };
                 const response = await axios.request(options);
                 const results = response.data.results;
-                const iframeContent = generateIframeContent(results);
-                setSearchResults(iframeContent); // 검색 결과 업데이트
-                console.log('Received response from search:', response.data); // 요청 후 응답 로그 출력
+                setSearchResults(results);
+                console.log('Received response from search:', response.data);
+                setIsLoading(false);
             }
             catch(error){
                 console.error('Error searching movies:', error);
@@ -67,61 +144,52 @@ const MainPage= () => {
             
         };
         searchMovies();
+        console.log("Search term:", searchTerm);
     },[searchTerm]);
-    
 
-    const handleSearch = (e) =>{
-        setSearchTerm(e.target.value);//검색어 입력 값 업데이트
-    }
-
-    const generateIframeContent = (results) =>{
-        const content = results.map(result => (
-            <div key={result.id}>
-                <Movie 
-                    originalTitle={result.original_title} 
-                    posterPath={result.poster_path} 
-                    voteAverage={result.vote_average} 
-                />
-            </div>
-        ));
-
-        const htmlString = ReactDOMServer.renderToStaticMarkup(//jsx를 문자열로 변환하여 전달
-            <html>
-                <head>
-                    <title>Search Results</title>
-                </head>
-                <body>
-                    <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px'}}>
-                        {content}
-                    </div>
-                </body>
-            </html>
-        )
-
-        return htmlString;
+    const gotoDetail=(id)=>{
+        navigate(`/movie/${id}`);
     }
 
     return(
         <div>
-            <Banner/>
-            <FindMovie>
-                <p style={{color: 'white', fontWeight:'bold',fontSize:'20px'}}>Find your movies!</p>
+            {isLoading?
+            (<Loading/>)
+            :(<>
+            <Banner/><br/>
+            <FindMovie>{/*div*/}
+                <p style={{color: 'white', fontWeight:'bold',fontSize:'30px'}}>🎥 Find your movies!</p>
                 <></>
-                <form onSubmit={handleSearch}>
-                    <Search type = 'text' value={searchTerm} onChange={handleSearch}/>
-                    <button type='submit'><img style={{width:'20px'}} src='src\img\lens.png'/></button>
-                </form>
-                <IframeContainer>
-                    {searchResults && (
-                        <iframe 
-                            title="Search Results"
-                            srcDoc={searchResults}
-                            width="1000px"
-                            height="400px"
-                        />
-                    )}
-                </IframeContainer>
-            </FindMovie>
+                <form>
+                    <Search type = 'text' value={searchTerm} onChange={(e) => optimizedSearch(e.target.value, 200)}/>
+                </form><br/><br/>
+
+                <ResultBox>
+                    {searchResults&&(
+                        searchResults.map(movie=>(
+                        
+                        <Container key={movie.id} onClick={()=>gotoDetail(movie.id)}>
+                            <Movie
+                                originalTitle={movie.original_title} 
+                                posterPath={movie.poster_path} 
+                                voteAverage={movie.vote_average}
+                                style={{}}
+                            />
+                            <OvvBox>
+                            <Overview 
+                                // key={movie.id}
+                                originalTitle={movie.original_title} 
+                                overView={movie.overview}
+                                style={{
+                                    float:'left'}}/>
+                            </OvvBox>
+                        </Container>
+                        
+                        )
+                    ))}
+                </ResultBox>
+            </FindMovie></>)}
+            
         </div>
         
     )

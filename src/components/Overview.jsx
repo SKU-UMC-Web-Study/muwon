@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom'
+// import DetailPage from '../pages/DetailPage';
 import styled from 'styled-components';
 
 const BlackBG = styled.div`
@@ -13,15 +15,24 @@ const BlackBG = styled.div`
     margin-top: 100px;
 
     &:hover{
-        opacity: 1;
+        opacity: 0.9;
     }
 `;
 
+
+
+// if(!detail){
+//     return <div>Loading...</div>;
+// }
+
+
 const Overview = ({originalTitle, overView}) => {
+    const navigate = useNavigate();
+
     return(
         <BlackBG>
-            <p className='s'>{originalTitle}</p>
-            <p className='s'>{overView}</p>
+            <p>{originalTitle}</p>
+            <p>{overView}</p>
         </BlackBG>
     )
 }

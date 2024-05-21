@@ -3,14 +3,15 @@ import { FaStar } from "react-icons/fa";
 import styled from 'styled-components'
 
 const Img = styled.img`
-    float:left;
-    width: 250px;
-    margin-right: 40px;
+    // float:left;
+    width: 60%;
+    margin-right: 30px;
 `;
 
 const Info = styled.div`
-    width: 450px;
+    width: 600px;
     display: inline-block;
+    // float:left;
     color: white;
 
     h2,h3,p{
@@ -30,8 +31,11 @@ const Detail =({posterPath, originalTitle, voteAverage, releaseDate, overview})=
     const columnValue = `repeat(${starCount}, 0fr)`;
 
     return(
-        <div>
-            <Img src = {`https://image.tmdb.org/t/p/w500/${posterPath}`} alt="Failed to image loading"></Img>
+        <div style={{display:'block'}}>
+            <br/><br/><br/><br/><br/><br/><br/>
+            <Info>
+                <Img src = {`https://image.tmdb.org/t/p/w500/${posterPath}`} alt="Failed to image loading"></Img>
+            </Info>
             <Info>
                 <h2>{originalTitle}</h2><br/>
                 {/* <h3>평점 <FaStar style={{gridTemplateColumns:starCount}}/></h3><br/> */}
