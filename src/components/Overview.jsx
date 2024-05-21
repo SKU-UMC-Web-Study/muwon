@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components';
 
 const BlackBG = styled.div`
@@ -13,7 +14,7 @@ const BlackBG = styled.div`
     margin-top: 100px;
 
     &:hover{
-        opacity: 1;
+        opacity: 0.9;
     }
 `;
 

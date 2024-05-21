@@ -6,9 +6,10 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     display: flex;
-    flex-wrap: wrap; /* 자식 요소들을 여러 줄에 걸쳐 정렬 */
-    justify-content: center; /* 수평 가운데 정렬 */
-    gap: 20px; /* 자식 요소들 간의 간격 */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+    position: relative;
 `;
 
 const OvvBox = styled.div`
@@ -16,6 +17,9 @@ const OvvBox = styled.div`
     flex-wrap: wrap; 
     justify-content: center; 
     gap: 20px; 
+    position: absolute;
+    top:0;
+    left:0;
 `;
 
 const UpComing= () => {

@@ -2,10 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 const BannerBG = styled.div`
-    float:left;
+    // float:left;
     width:1400px;
-    height: 200px;
+    height: 300px;
     background-color: black;
+    position: realative;
 `;
 
 const BannerText = styled.p`
@@ -14,7 +15,7 @@ const BannerText = styled.p`
     font-weight: bold;
     padding: 70px;
     /* position: absolute */
-    margin-top:auto;
+    // margin-top:auto;
 `;
 
 const Banner = () =>{
