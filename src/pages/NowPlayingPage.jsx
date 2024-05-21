@@ -2,7 +2,25 @@ import React, {useState, useEffect}  from 'react';
 
 import Movie from '../components/Movie.jsx'
 import Overview from '../components/Overview.jsx'
-import './Page.css'
+import styled from 'styled-components';
+
+const Container = styled.div`
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 20px; 
+    position: relative;
+`;
+
+const OvvBox = styled.div`
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+    position: absolute;
+    top:0;
+    left:0;
+`;
 
 const NowPlayingPage= () => {
     const [movies, setMovies] = useState([]);
@@ -30,21 +48,19 @@ const NowPlayingPage= () => {
     }, [])
 
     return(
-        <div className = 'container'>
+        <Container>
             {movies.map(movie => (
             <Movie key={movie.id} 
             originalTitle={movie.original_title} 
             posterPath={movie.poster_path} 
-            voteAverage={movie.vote_average}/>
-            ))}
-            <div className='ovvBox'>
+            voteAverage={movie.vote_average}/>))}
+            <OvvBox>
                 {movies.map(movie => (
                 <Overview key={movie.id}
                 originalTitle={movie.original_title} 
-                overView={movie.overview}/>
-                ))}
-            </div>
-        </div>
+                overView={movie.overview}/>))}
+            </OvvBox>
+        </Container>
     )
 }
 
