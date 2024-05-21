@@ -38,7 +38,7 @@ const PopularPage= () => {
                     method: 'GET',
                     headers: {
                       accept: 'application/json',
-                      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZmE5ZDI5YzRhNWQ4OGJhY2QxODIxOWVhZmZlYzZlMCIsInN1YiI6IjY2MmU1NzMyMDNiZjg0MDEyNWVhZGE5MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.w00sWoRJw_0sqWhMuuINho69qGOHu_jkC9HbH2Rw2Hk'
+                      Authorization: 'Bearer API_KEY'
                     }
                 }
                 const response = await fetch('https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1', options);
