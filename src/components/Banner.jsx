@@ -1,11 +1,28 @@
 import React from 'react'
-import './Banner.css'
+import styled from 'styled-components'
+
+const BannerBG = styled.div`
+    // float:left;
+    width:1400px;
+    height: 300px;
+    background-color: black;
+    position: realative;
+`;
+
+const BannerText = styled.p`
+    color:rgb(224, 222, 222);
+    font-size: 30px;
+    font-weight: bold;
+    padding: 70px;
+    /* position: absolute */
+    // margin-top:auto;
+`;
 
 const Banner = () =>{
     return(
-        <div id='banner-bg'>
-            <p id='banner'>환영합니다</p>   
-        </div>
+        <BannerBG>
+            <BannerText>환영합니다</BannerText>
+        </BannerBG>
         
     )
 }

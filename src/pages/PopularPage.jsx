@@ -1,13 +1,35 @@
 import React, {useState, useEffect}  from 'react';
-
+import { useParams, useNavigate } from 'react-router-dom'
 import Movie from '../components/Movie.jsx'
 import Overview from '../components/Overview.jsx'
-import './Page.css'
 // import Spinner from 'src\components\Spinner.jsx'
+import styled from 'styled-components';
+
+export const PageContainer = styled.div`
+    background-color: rgb(45, 41, 120);
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+    position: relative;
+`;
+
+const OvvBox = styled.div`
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+    position: absolute;
+    top:0;
+    left:0;
+`;
+
 
 const PopularPage= () => {
     const [movies, setMovies] = useState([]);
     // const [loading, setLoading] = useState(true);
+    const {id} = useParams();
+    const navigation = useNavigate();
 
     useEffect(()=>{
         const fetchMovies = async () => {
@@ -22,6 +44,7 @@ const PopularPage= () => {
                 const response = await fetch('https://api.themoviedb.org/3/movie/popular?language=ko-KR&page=1', options);
                 const data = await response.json();
                 setMovies(data.results);
+                console.log('data:'+ data.results.map(movie=>movie.id).join(','));
             }
             catch(error){
                 console.error('Error fetching movies:', error);
@@ -34,23 +57,30 @@ const PopularPage= () => {
         fetchMovies();
     }, [])
 
+    const gotoDetail =(id)=>{
+        navigation(`/movie/${id}`);
+    }
+
     return(
-        <div className = 'pageContainer'>
+        <PageContainer>
             {/* {loading && <Spinner/>} */}
             {movies.map(movie => (
-            <Movie key={movie.id} 
-            originalTitle={movie.original_title} 
-            posterPath={movie.poster_path} 
-            voteAverage={movie.vote_average}/>
-            ))}
-            <div className='ovvBox'>
-                {movies.map(movie => (
-                <Overview key={movie.id}
+            <Movie 
+                key={movie.id} 
                 originalTitle={movie.original_title} 
-                overView={movie.overview}/>
+                posterPath={movie.poster_path} 
+                voteAverage={movie.vote_average}/>
+            ))}
+            <OvvBox>
+                {movies.map(movie => (
+                <Overview 
+                    onClick={()=>gotoDetail(movie.id)}
+                    key={movie.id}
+                    originalTitle={movie.original_title} 
+                    overView={movie.overview}/>
                 ))}
-            </div>
-        </div>
+            </OvvBox>
+        </PageContainer>
     )
 }
 
