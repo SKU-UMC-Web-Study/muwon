@@ -1,9 +1,24 @@
 import React, {useState, useEffect}  from 'react';
-
 import Movie from '../components/Movie.jsx'
 import Overview from '../components/Overview.jsx'
-import './Page.css'
 // import Spinner from 'src\components\Spinner.jsx'
+import styled from 'styled-components';
+
+const PageContainer = styled.div`
+    background-color: rgb(45, 41, 120);
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+`;
+
+const OvvBox = styled.div`
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+`;
+
 
 const PopularPage= () => {
     const [movies, setMovies] = useState([]);
@@ -35,7 +50,7 @@ const PopularPage= () => {
     }, [])
 
     return(
-        <div className = 'pageContainer'>
+        <PageContainer>
             {/* {loading && <Spinner/>} */}
             {movies.map(movie => (
             <Movie key={movie.id} 
@@ -43,14 +58,14 @@ const PopularPage= () => {
             posterPath={movie.poster_path} 
             voteAverage={movie.vote_average}/>
             ))}
-            <div className='ovvBox'>
+            <OvvBox>
                 {movies.map(movie => (
                 <Overview key={movie.id}
                 originalTitle={movie.original_title} 
                 overView={movie.overview}/>
                 ))}
-            </div>
-        </div>
+            </OvvBox>
+        </PageContainer>
     )
 }
 
