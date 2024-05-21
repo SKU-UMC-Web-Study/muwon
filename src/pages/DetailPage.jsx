@@ -17,7 +17,7 @@ const DetailPage = () =>{
                     method: 'GET',
                     headers: {
                       accept: 'application/json',
-                      Authorization: 'Bearer'
+                      Authorization: 'Bearer API_KEY'
                     }
                 }
                 const response = await fetch(`https://api.themoviedb.org/3/movie/${title}?language=en-US&page=1`, options)
