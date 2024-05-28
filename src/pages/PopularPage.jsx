@@ -43,9 +43,9 @@ const PopularPage = () => {
   const page = parseInt(pageParam, 10) || 1; // 기본 페이지 번호를 1로 설정
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ['movies', page],
-    queryFn: () => fetchMovies(page),
-    keepPreviousData: true,
+    queryKey: ['movies', page], //쿼리를 식별하는 유일한 키
+    queryFn: () => fetchMovies(page), //데이터를 페칭하는 함수, fetchMovies(page) 사용
+    keepPreviousData: true, //페이지가 변경될 때 이전 페이지의 데이터를 유지하도록 설정
   });
 
   const handlePageBack = () => {
