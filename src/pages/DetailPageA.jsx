@@ -11,7 +11,7 @@ const DetailPage = () =>{
     useEffect(()=>{
         const fetchDetails = async () =>{
             const Authorization = '8fa9d29c4a5d88bacd18219eaffec6e0'
-            const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${Authorization}&language=ko-KR`
+            const url = `https://api.themoviedb.org/3/movie/${id}?language=ko-KR`
             try{
                 const response = await axios.get(url,{
                     headers: {
