@@ -3,6 +3,13 @@ import Movie from '../components/Movie.jsx';
 import Overview from '../components/Overview.jsx';
 import Spinner from '../components/Spinner.jsx'; 
 import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+body{
+  background-color: #262952;
+}
+`;
 
 const Container = styled.div`
     display: flex;
@@ -65,6 +72,7 @@ const NowPlayingPage = () => {
 
     return (
         <>
+            <GlobalStyle/>
             {loading && <Spinner />} {/* 로딩 중일 때 Loading 컴포넌트 표시 */}
             <Container>
                 {movies.map(movie => (
@@ -86,6 +94,7 @@ const NowPlayingPage = () => {
                 </OvvBox>
                 <div ref={loaderRef}></div>
             </Container>
+            
         </>
     );
 }

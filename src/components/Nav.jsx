@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 // import Spinner from 'Spinner.jsx'
 import styled from 'styled-components';
 
+
 const Navbar = styled.div`
     width: 100%;
     height: 20px;
@@ -11,12 +12,30 @@ const Navbar = styled.div`
     padding: 20px;
 
 
-    position: fixed;
-    top: 0;
-    left:0;
-    right:0;
-    z-index: 999;
+    // position: fixed;
+    // top: 0;
+    // left:0;
+    // right:0;
+    // z-index: 999;
+
 `;
+
+const Large = styled.div`
+    margin:0;
+    padding: 0;
+    @media (max-width: 600px){
+        display:none;
+    }
+`
+
+const Small = styled.div`
+    margin-top: 0;   
+    padding: 0;
+    position: relative;
+    @media (min-width: 600px){
+        display:none;
+    }
+`
 
 const NavItem = styled(Link)`
     color: white;
@@ -35,11 +54,45 @@ const NavItem = styled(Link)`
         color: yellow;
     }
 }
-`;
+`
+const Toggle = styled.button`
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+
+    &:hover{
+        cursor:pointer;
+    }
+`
+
+const OffCanvas = styled.div`
+    height: 1000px;
+    width: ${(props) => (props.isOpen ? '100%' : '0')};
+    position: fixed;
+    z-index: 999;
+    right: ${(props) => (props.isOpen ? '0' : '-250px')}; // Adjusted for right to left slide
+    background-color: rgb(27, 23, 104);
+    transition: right 0.5s;
+    opacity: 90%;
+    position: absolute;
+    top: 20px;
+
+
+    ${NavItem}{
+        &:first-child{
+            margin-right: 0%;
+        }
+        display:${(props) => (props.isOpen ? 'block' : 'none')};
+        margin-top: 30px;
+    }
+`
+
 
 const Nav = () => {
     // const location = useLocation();
     const [isLogin, setIsLogin] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -65,13 +118,12 @@ const Nav = () => {
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
-            } finally {
             }
         };
 
         fetchUserData();
     }, []);
-    console.log("nav 확인" + isLogin);
+    // console.log("nav 확인" + isLogin);
 
     const handleLoginItem =()=>{
         if(isLogin){
@@ -83,16 +135,44 @@ const Nav = () => {
         }
     }
 
+    const toggling=()=>{
+        setIsOpen(!isOpen);
+    }
+
+    useEffect(() => {
+        console.log("isOpen: " + isOpen);
+    }, [isOpen]);
+
+    const handleCloseSidebar = () =>{
+        setIsOpen(false);
+    }
+
  return(
         <Navbar>
-            <NavItem to="/">UMC Movie</NavItem>
-            <NavItem to={isLogin ? "/" : "/login"} onClick={handleLoginItem}>{isLogin ? '로그아웃' : '로그인'}</NavItem>
-            {isLogin ? null :<NavItem to="/signup">회원가입</NavItem> }
-            <NavItem to="/popular/:page">Popular</NavItem>
-            <NavItem to="/nowplaying">Now Playing</NavItem>
-            <NavItem to="/toprated">Top Rated</NavItem>
-            <NavItem to="/upcoming">Upcoming</NavItem>
-            {/* {loading && <Spinner/>} */}
+
+            <Large>
+                <NavItem to="/">UMC Movie</NavItem>
+                <NavItem to={isLogin ? "/" : "/login"} onClick={handleLoginItem}>{isLogin ? '로그아웃' : '로그인'}</NavItem>
+                {isLogin ? null :<NavItem to="/signup">회원가입</NavItem> }
+                <NavItem to="/popular/:page">Popular</NavItem>
+                <NavItem to="/nowplaying">Now Playing</NavItem>
+                <NavItem to="/toprated">Top Rated</NavItem>
+                <NavItem to="/upcoming">Upcoming</NavItem>
+                {/* {loading && <Spinner/>} */}
+            </Large>
+            <Small>
+                <NavItem to="/" style={{marginTop: '-30px'}}>UMC Movie</NavItem>
+                <Toggle onClick={toggling} style={{marginTop: '-30px'}}>☰</Toggle>
+                <OffCanvas isOpen={isOpen}>
+                    <NavItem to={isLogin ? "/" : "/login"} onClick={()=>{handleLoginItem(); handleCloseSidebar();}}>{isLogin ? '로그아웃' : '로그인'}</NavItem>
+                    {isLogin ? null :<NavItem to="/signup">회원가입</NavItem> }
+                    <NavItem to="/popular/:page" onClick={handleCloseSidebar}>Popular</NavItem>
+                    <NavItem to="/nowplaying" onClick={handleCloseSidebar}>Now Playing</NavItem>
+                    <NavItem to="/toprated" onClick={handleCloseSidebar}>Top Rated</NavItem>
+                    <NavItem to="/upcoming" onClick={handleCloseSidebar}>Upcoming</NavItem>
+                </OffCanvas>
+            </Small>
+
         </Navbar>
         
     )
