@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodo } from '../features/todos/todoSlice';
+import { addTodo } from '../features/todos/actions';
 import TodoItem from './TodoItem';
 
 const TodoList = () =>{
