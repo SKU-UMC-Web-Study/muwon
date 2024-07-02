@@ -1,11 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
-import cartItems from '../../constants/cartItems';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const fetchCartItems = createAsyncThunk(
+    'cart/fetchCartItems',
+    async(_, thunkAPI)=>{
+        try{
+            const response = await axios.get('/musics');
+            return response.data;
+        }catch(error){
+            return thunkAPI.rejectWithValue('404 Page Not Found');
+        }
+
+    }
+)
 
 const initialState = {
-    cartItems: cartItems,
+    cartItems: [],
     totalAmount: 0,
-    totalPrice:0,
-};
+    totalPrice: 0,
+    status: 'idle',
+    error: null,
+}
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -37,7 +52,23 @@ const cartSlice = createSlice({
             state.totalPrice = totalPrice;
         },
     },
+    extraReducers:(builder)=>{
+        builder
+            .addCase(fetchCartItems.pending, (state)=>{
+                state.status = 'loading';
+            })
+            .addCase(fetchCartItems.fulfilled, (state, action)=>{
+                state.status = 'succeeded';
+                state.cartItems = action.payload;
+            })
+            .addCase(fetchCartItems.rejected, (state, action)=>{
+                state.status = 'failed';
+                state.error = action.payload;
+                alert(action.payload);
+            });
+    },
 });
 
 export const { increase, decrease, removeItem, cleanCart, calculateTotals } = cartSlice.actions;
 export default cartSlice.reducer;
+export { fetchCartItems }; 

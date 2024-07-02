@@ -4,6 +4,34 @@ import styled from 'styled-components';
 import { cleanCart } from '../features/cart/cartSlice';
 import { closeModal } from '../features/modal/modalSlice';
 
+
+const Modal =()=>{
+  const dispatch = useDispatch();
+  const { isOpen } = useSelector((state) => state.modal);
+
+  if(!isOpen) return null;
+
+  return(
+      <ModalContainer>
+          <ModalContent>
+              <h4>담아둔 모든 음반들을 삭제하시겠습니까?</h4> 
+              <ButtonContainer>
+                  <Button
+                      onClick={()=>{
+                          dispatch(cleanCart());
+                          dispatch(closeModal());
+                      }}>
+                      네
+                  </Button>
+                  <Button onClick={()=>dispatch(closeModal())}>아니요</Button>
+              </ButtonContainer>
+          </ModalContent>
+      </ModalContainer>
+  )
+};
+
+export default Modal;
+
 const ModalContainer = styled.div`
   position: fixed;
   top: 0;
@@ -40,30 +68,3 @@ const Button = styled.button`
     background: #0056b3;
   }
 `;
-
-const Modal =()=>{
-    const dispatch = useDispatch();
-    const { isOpen } = useSelector((state) => state.modal);
-
-    if(!isOpen) return null;
-
-    return(
-        <ModalContainer>
-            <ModalContent>
-                <h4>담아둔 모든 음반들을 삭제하시겠습니까?</h4> 
-                <ButtonContainer>
-                    <Button
-                        onClick={()=>{
-                            dispatch(cleanCart());
-                            dispatch(closeModal());
-                        }}>
-                        네
-                    </Button>
-                    <Button onClick={()=>dispatch(closeModal())}>아니요</Button>
-                </ButtonContainer>
-            </ModalContent>
-        </ModalContainer>
-    )
-};
-
-export default Modal;
